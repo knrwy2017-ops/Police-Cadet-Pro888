@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คลังสรุปเนื้อหาเตรียมสอบ นสต. สายปราบปราม (RTP NCO Study Guide Pro v3)</title>
+    <!-- Google Fonts: Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Prompt', 'sans-serif'] },
+                    colors: {
+                        police: {
+                            50: '#f0f4f8', 100: '#d9e2ec', 200: '#bccadc', 300: '#9fb3c8', 400: '#829ab1', 500: '#627d98', 600: '#102a43', 700: '#0b1b2b', 800: '#060d16', 900: '#03060a', gold: '#d4af37', 'gold-hover': '#b89628',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome 6.4.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- KaTeX Math Renderer -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <style>
+        body { font-family: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+        ::-webkit-scrollbar-thumb { background: rgba(98, 125, 152, 0.5); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(212, 175, 55, 0.8); }
+        .gold-gradient-text { background: linear-gradient(135deg, #FFF099 0%, #D4AF37 50%, #AA7C11 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .content-body ul { list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem; margin-bottom: 0.75rem; }
+        .content-body ol { list-style-type: decimal; margin-left: 1.5rem; margin-top: 0.5rem; margin-bottom: 0.75rem; }
+        .content-body li { margin-bottom: 0.35rem; }
+        .content-body p { margin-bottom: 0.75rem; }
+        .content-body strong { color: #d97706; font-weight: 700; }
+        .dark .content-body strong { color: #fbbf24; }
+    </style>
+</head>
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="toast-container" class="fixed top-20 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    
+    <!-- STICKY NAVBAR -->
+    <nav class="sticky top-0 z-40 bg-police-700/95 dark:bg-police-900/95 backdrop-blur-md border-b border-police-500/30 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('dashboard')">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-police-gold to-yellow-200 flex items-center justify-center text-police-900 font-extrabold shadow-md border border-amber-300">
+                        <i class="fa-solid font-bold fa-book-open-reader text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="font-extrabold text-lg sm:text-xl tracking-wide gold-gradient-text">นสต. สรุปเนื้อหา Pro</div>
+                        <div class="text-[11px] text-slate-300 -mt-1 hidden sm:block">คลังความรู้เตรียมสอบ 6 วิชาหลัก & ระบบฝึกสอบอัจฉริยะ</div>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-medium">
+                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-3.5 py-2 rounded-xl transition-all hover:bg-police-600/60 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-amber-400"></i> หน้าหลัก
+                    </button>
+                    <button onclick="switchTab('flashcards')" id="nav-flashcards" class="nav-btn px-3.5 py-2 rounded-xl transition-all hover:bg-police-600/60 flex items-center gap-2">
+                        <i class="fa-solid fa-bolt text-amber-400"></i> Flashcards & ควิซรวม
+                    </button>
+                    <button onclick="switchTab('admin')" id="nav-admin" class="nav-btn px-3.5 py-2 rounded-xl transition-all hover:bg-police-600/60 flex items-center gap-2">
+                        <i class="fa-solid fa-database text-amber-400"></i> จัดการเนื้อหา
+                    </button>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleTheme()" title="สลับโหมดมืด/สว่าง" class="p-2.5 rounded-full hover:bg-police-600/60 text-amber-300 transition-colors">
+                        <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg hover:bg-police-600/60 text-slate-200">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-police-800/95 border-t border-police-600/40 px-4 pt-2 pb-4 space-y-1">
+            <button onclick="switchTab('dashboard')" class="w-full text-left px-3 py-2.5 rounded-md hover:bg-police-700 flex items-center gap-3">
+                <i class="fa-solid fa-chart-pie text-amber-400 w-5"></i> หน้าหลัก (Dashboard)
+            </button>
+            <button onclick="switchTab('flashcards')" class="w-full text-left px-3 py-2.5 rounded-md hover:bg-police-700 flex items-center gap-3">
+                <i class="fa-solid fa-bolt text-amber-400 w-5"></i> Flashcards & ควิซรวม
+            </button>
+            <button onclick="switchTab('admin')" class="w-full text-left px-3 py-2.5 rounded-md hover:bg-police-700 flex items-center gap-3">
+                <i class="fa-solid fa-database text-amber-400 w-5"></i> จัดการเนื้อหา
+            </button>        
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
+        <!-- 1. DASHBOARD TAB -->
+        <section id="tab-dashboard" class="tab-content space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                <!-- Welcome Banner -->
+                <div class="lg:col-span-5 relative overflow-hidden rounded-2xl bg-gradient-to-br from-police-700 via-police-800 to-police-900 border border-police-500/30 p-6 shadow-xl text-white flex flex-col justify-between">
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-bold mb-3">
+                            <i class="fa-solid fa-shield-halved"></i> เตรียมสอบสายปราบปราม (นสต.)
+                        </div>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
+                            คลังสรุปเนื้อหา <span class="gold-gradient-text">นายสิบตำรวจ</span>
+                        </h1>
+                        <p class="mt-2 text-slate-300 text-xs sm:text-sm leading-relaxed">
+                            ครอบคลุม 6 วิชาหลัก พร้อมเทคนิคจำไว ระบบค้นหาติดแท็ก ควิซทดสอบท้ายบท และตัวจับเวลาอ่านหนังสือ
+                        </p>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-police-600/50 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-300">
+                        <span><i class="fa-solid fa-book-bookmark text-amber-400 mr-1"></i> บทเรียนทั้งหมด: <strong id="hero-total-lessons" class="text-white">0</strong> บท</span>
+                        <span><i class="fa-solid fa-circle-question text-emerald-400 mr-1"></i> ข้อสอบท้ายบท: <strong id="hero-total-quizzes" class="text-white">0</strong> ข้อ</span>
+                    </div>
+                </div>
+
+                <!-- Exam Countdown Tracker Widget -->
+                <div class="lg:col-span-3 bg-white dark:bg-police-800/90 border border-slate-200 dark:border-police-600/40 rounded-2xl p-5 shadow-md flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-sm text-slate-700 dark:text-slate-200 flex items-center gap-2">
+                                <i class="fa-solid fa-calendar-check text-rose-500"></i> นับถอยหลังวันสอบ
+                            </h3>
+                            <button onclick="openExamDateModal()" class="text-xs text-amber-600 dark:text-amber-400 hover:underline font-semibold flex items-center gap-1">
+                                <i class="fa-solid fa-gear"></i> ตั้งวันสอบ
+                            </button>
+                        </div>
+                        <p id="exam-target-label" class="text-[11px] text-slate-500 dark:text-slate-400">เป้าหมาย: วันสอบข้อเขียน นสต.</p>
+                    </div>
+                    <div class="my-4 text-center py-3 px-2 rounded-xl bg-slate-50 dark:bg-police-900/90 border border-slate-200/80 dark:border-police-700">
+                        <div id="countdown-days" class="text-4xl font-extrabold text-amber-500 tracking-tight">--</div>
+                        <div id="countdown-subtext" class="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1">วันก่อนถึงสนามสอบ</div>
+                    </div>
+                    <div class="text-[11px] text-center text-slate-500 dark:text-slate-400">
+                        "วินัยในการอ่านวันนี้ คือดาวบนบ่าในวันหน้า"
+                    </div>
+                </div>
+
+                <!-- Pomodoro Study Timer Widget -->
+                <div class="lg:col-span-4 bg-white dark:bg-police-800/90 border border-slate-200 dark:border-police-600/40 rounded-2xl p-5 shadow-md flex flex-col justify-between">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-sm text-slate-700 dark:text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-stopwatch text-emerald-500"></i> จับเวลาอ่านหนังสือ (Pomodoro)
+                        </h3>
+                        <div class="flex gap-1">
+                            <button onclick="setPomodoroMode('focus')" id="pomo-mode-focus" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-500 text-police-900">โฟกัส 25 น.</button>
+                            <button onclick="setPomodoroMode('break')" id="pomo-mode-break" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-200 dark:bg-police-900 text-slate-600 dark:text-slate-300">พัก 5 น.</button>
+                        </div>
+                    </div>
+                    <div class="my-3 flex items-center justify-center gap-4 py-2 px-4 rounded-xl bg-slate-50 dark:bg-police-900/90 border border-slate-200/80 dark:border-police-700">
+                        <div id="pomodoro-display" class="text-4xl font-mono font-extrabold text-slate-800 dark:text-white tracking-wider">25:00</div>
+                        <div class="flex flex-col gap-1">
+                            <span id="pomodoro-status-badge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 text-center">พร้อมอ่าน</span>
+                            <span class="text-[10px] text-slate-400 text-center">รอบที่จบ: <strong id="pomodoro-sessions">0</strong></span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="togglePomodoro()" id="btn-pomo-start" class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow transition flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-play"></i> เริ่มจับเวลา
+                        </button>
+                        <button onclick="resetPomodoro()" class="px-3 py-2 bg-slate-200 dark:bg-police-700 hover:bg-slate-300 dark:hover:bg-police-600 text-slate-700 dark:text-slate-200 font-bold rounded-xl text-xs transition" title="รีเซ็ตเวลา">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Overall Progress Bar -->
+            <div class="bg-white dark:bg-police-800/80 border border-slate-200 dark:border-police-600/40 rounded-2xl p-5 sm:p-6 shadow-md">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                    <h3 class="font-bold text-slate-700 dark:text-slate-200 flex items-center gap-2">
+                        <i class="fa-solid fa-bars-progress text-amber-500"></i> ความคืบหน้าการอ่านภาพรวม (Overall Study Progress)
+                    </h3>
+                    <div class="flex items-center gap-3 text-xs sm:text-sm font-bold">
+                        <span class="text-slate-500 dark:text-slate-400">อ่านจบแล้ว:</span>
+                        <span id="overall-progress-text" class="text-amber-600 dark:text-amber-400">0 / 0 บทเรียน (0%)</span>
+                    </div>
+                </div>
+                <div class="w-full bg-slate-200 dark:bg-slate-700 h-3.5 rounded-full overflow-hidden border border-slate-300 dark:border-slate-600">
+                    <div id="overall-progress-bar" class="bg-gradient-to-r from-amber-500 via-yellow-400 to-emerald-500 h-full rounded-full transition-all duration-700 w-0"></div>
+                </div>
+            </div>
+
+            <!-- Global Quick Search & Tag Filter Bar -->
+            <div class="bg-white dark:bg-police-800/80 border border-slate-200 dark:border-police-600/40 rounded-2xl p-5 shadow-md space-y-4">
+                <div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+                    <div class="relative flex-1">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input type="text" id="global-search-input" oninput="handleGlobalSearch()" placeholder="ค้นหาด่วนทุกวิชา เช่น มาตรา 68, อนุกรม, ราชาศัพท์, Active-Passive, อาเซียน..." class="w-full pl-10 pr-9 py-2.5 bg-slate-50 dark:bg-police-900 border border-slate-300 dark:border-police-600 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-amber-400">
+                        <button id="btn-clear-search" onclick="clearGlobalSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                        <span class="text-xs font-bold text-slate-500 dark:text-slate-400 mr-1"><i class="fa-solid fa-tags text-amber-400"></i> แท็ก:</span>
+                        <button onclick="setTagFilter('ALL')" data-tag="ALL" class="tag-chip px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-police-900 transition">ทั้งหมด</button>
+                        <button onclick="setTagFilter('ออกสอบบ่อย')" data-tag="ออกสอบบ่อย" class="tag-chip px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-police-900 text-slate-600 dark:text-slate-300 hover:border-amber-400 border border-transparent transition">🔥 #ออกสอบบ่อย</button>
+                        <button onclick="setTagFilter('จำยาก')" data-tag="จำยาก" class="tag-chip px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-police-900 text-slate-600 dark:text-slate-300 hover:border-amber-400 border border-transparent transition">🧠 #จำยาก</button>
+                        <button onclick="setTagFilter('ต้องทวนซ้ำ')" data-tag="ต้องทวนซ้ำ" class="tag-chip px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-police-900 text-slate-600 dark:text-slate-300 hover:border-amber-400 border border-transparent transition">📌 #ต้องทวนซ้ำ</button>
+                        <button onclick="setTagFilter('UNREAD')" data-tag="UNREAD" class="tag-chip px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-police-900 text-slate-600 dark:text-slate-300 hover:border-amber-400 border border-transparent transition">📖 ยังไม่ได้อ่าน</button>
+                    </div>
+                </div>
+
+                <!-- Search / Filter Results Panel -->
+                <div id="search-results-panel" class="hidden pt-3 border-t border-slate-200 dark:border-police-700 space-y-2">
+                    <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400 mb-2">
+                        <span id="search-results-count">ผลการค้นหา 0 รายการ</span>
+                        <button onclick="clearGlobalSearch()" class="text-amber-500 hover:underline">ซ่อนผลการค้นหา</button>
+                    </div>
+                    <div id="search-results-list" class="grid grid-cols-1 md:grid-cols-2 gap-2.5 max-h-80 overflow-y-auto pr-1"></div>
+                </div>
+            </div>
+
+            <!-- Subject Cards Grid -->
+            <div>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-amber-400"></i> เลือกรายวิชาเพื่ออ่านเนื้อหา (6 หมวดวิชาหลัก)
+                    </h2>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="subject-cards-grid"></div>
+            </div>
+        </section>
+
+        <!-- 2. LESSON LIST TAB -->
+        <section id="tab-lesson-list" class="tab-content hidden space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <button onclick="switchTab('dashboard')" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-amber-500 transition flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก
+                </button>
+                <button onclick="startSubjectQuiz()" id="btn-subject-quiz" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-police-900 font-extrabold rounded-xl text-xs shadow transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-bolt"></i> ทดสอบควิซรวมวิชานี้
+                </button>
+            </div>
+            <div class="bg-white dark:bg-police-800/90 border border-slate-200 dark:border-police-600/40 rounded-2xl p-6 shadow-xl">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                    <h2 id="list-subject-title" class="text-xl sm:text-2xl font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-book text-amber-400"></i> หมวดวิชา
+                    </h2>
+                    <span id="list-subject-stats" class="text-xs font-bold text-amber-500">อ่านแล้ว 0/0 บท</span>
+                </div>
+                <div class="w-full bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden mb-6">
+                    <div id="list-subject-progress" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <div id="lesson-list-container" class="space-y-3"></div>
+            </div>
+        </section>
+
+        <!-- 3. READING VIEW TAB -->
+        <section id="tab-reading-view" class="tab-content hidden space-y-4">
+            <div class="flex flex-wrap justify-between items-center gap-2 bg-white/95 dark:bg-police-800/95 backdrop-blur border border-slate-200 dark:border-police-600/40 rounded-2xl p-3.5 sm:p-4 shadow-md sticky top-16 z-30">
+                <button onclick="switchTab('lesson-list')" class="text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-amber-500 transition flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> กลับหน้ารายการวิชา
+                </button>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <div class="flex items-center bg-slate-100 dark:bg-police-900 rounded-xl p-1 border border-slate-200 dark:border-police-700">
+                        <button onclick="changeFontSize(-1)" title="ลดขนาดตัวอักษร" class="px-2 py-1 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-amber-400">A-</button>
+                        <button onclick="changeFontSize(1)" title="เพิ่มขนาดตัวอักษร" class="px-2 py-1 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-amber-400">A+</button>
+                    </div>
+                    <button id="btn-open-quiz" onclick="openLessonQuizModal()" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-police-900 font-extrabold rounded-xl text-xs shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-pen-clip"></i> ทดสอบความเข้าใจ (<span id="reading-quiz-count">0</span> ข้อ)
+                    </button>
+                    <button id="btn-mark-read" onclick="toggleReadStatus()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-check-circle"></i> ทำเครื่องหมายว่าอ่านแล้ว
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lesson Content Card -->
+            <div class="bg-white dark:bg-police-800/90 border border-slate-200 dark:border-police-600/40 rounded-2xl p-5 sm:p-10 shadow-xl">
+                <div class="mb-6 border-b border-slate-200 dark:border-police-600/30 pb-4">
+                    <div class="flex flex-wrap items-center gap-2 mb-3">
+                        <span id="reading-subject-badge" class="px-3 py-1 bg-police-700 text-amber-300 rounded-lg text-xs font-bold border border-police-500">วิชา</span>
+                        <div id="reading-tags-container" class="flex flex-wrap items-center gap-1.5"></div>
+                    </div>
+                    <h1 id="reading-title" class="text-xl sm:text-3xl font-extrabold text-slate-800 dark:text-white leading-snug">หัวข้อบทเรียน</h1>
+                </div>
+
+                <div id="reading-image-container" class="hidden mb-6 text-center">
+                    <img id="reading-image" src="" alt="ภาพประกอบ" class="max-h-80 mx-auto rounded-xl shadow-md border border-slate-300 dark:border-police-600">
+                </div>
+
+                <div id="reading-content" class="text-base sm:text-lg text-slate-700 dark:text-slate-200 leading-relaxed content-body">
+                    เนื้อหา...
+                </div>
+
+                <div id="reading-trick-container" class="hidden mt-8 p-4 sm:p-5 rounded-xl bg-gradient-to-r from-amber-500/15 via-amber-500/10 to-transparent border border-amber-500/40 text-amber-800 dark:text-amber-300 shadow-sm">
+                    <h4 class="font-bold text-amber-600 dark:text-amber-400 mb-1.5 flex items-center gap-2 text-sm sm:text-base">
+                        <i class="fa-solid fa-lightbulb text-amber-400 text-lg"></i> เทคนิค / สูตรลัดช่วยจำ (High-Yield Trick)
+                    </h4>
+                    <p id="reading-trick" class="text-sm sm:text-base font-medium leading-relaxed"></p>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-slate-200 dark:border-police-700 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                        <i class="fa-solid fa-graduation-cap text-amber-400 mr-1"></i> อ่านจบบทนี้แล้ว ลองทำข้อสอบปรนัยสั้นๆ เพื่อวัดความแม่นยำก่อนสอบจริง
+                    </div>
+                    <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                        <button onclick="openLessonQuizModal()" class="w-full sm:w-auto px-5 py-2.5 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-police-900 font-extrabold rounded-xl text-xs sm:text-sm shadow-lg transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-circle-play"></i> เริ่มทำข้อสอบท้ายบทเรียนนี้
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. FLASHCARDS & QUICK QUIZ TAB -->
+        <section id="tab-flashcards" class="tab-content hidden space-y-6">
+            <div class="bg-white dark:bg-police-800/90 border border-slate-200 dark:border-police-600/40 rounded-2xl p-6 shadow-xl">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+                            <i class="fa-solid fa-bolt text-amber-400"></i> ระบบ Flashcards ท่องจำสูตรลัด & ควิซสุ่มสอบ
+                        </h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">คลิกที่การ์ดเพื่อพลิกดูสูตรลัด/คำตอบ หรือกดสุ่มทำข้อสอบรวมทุกวิชา</p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <select id="flashcard-subject-filter" onchange="initFlashcards()" class="bg-slate-50 dark:bg-police-900 border border-slate-300 dark:border-police-600 rounded-xl px-3 py-2 text-xs font-bold">
+                            <option value="ALL">รวมทุกหมวดวิชา (6 วิชา)</option>
+                            <option value="math">1.1 ความสามารถทั่วไป</option>
+                            <option value="thai">1.2 ภาษาไทย</option>
+                            <option value="eng">1.3 ภาษาอังกฤษ</option>
+                            <option value="it">1.4 เทคโนโลยีสารสนเทศฯ</option>
+                            <option value="law">1.5 กฎหมายที่ประชาชนควรรู้</option>
+                            <option value="social">1.6 สังคม จริยธรรม อาเซียน</option>
+                        </select>
+                        <button onclick="startRandomAllQuiz()" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-police-900 font-extrabold rounded-xl text-xs shadow transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-shuffle"></i> สุ่มทำข้อสอบรวม (10 ข้อ)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Interactive Flip Card Area -->
+                <div class="max-w-2xl mx-auto my-4">
+                    <div onclick="flipCurrentCard()" class="cursor-pointer select-none rounded-2xl bg-gradient-to-br from-police-700 via-police-800 to-police-900 border-2 border-amber-500/40 p-6 sm:p-10 min-h-[260px] shadow-2xl flex flex-col justify-between text-center transition-all hover:border-amber-400">
+                        <div class="flex items-center justify-between text-xs text-slate-300">
+                            <span id="fc-badge" class="px-2.5 py-1 rounded-lg bg-police-600 text-amber-300 font-bold">หมวดวิชา</span>
+                            <span id="fc-counter" class="font-mono font-bold text-amber-400">1 / 1</span>
+                        </div>
+                        <div class="my-6">
+                            <div id="fc-side-label" class="text-[11px] uppercase tracking-wider text-amber-400 font-bold mb-2">หัวข้อ / คำถาม (คลิกเพื่อพลิกดูสูตรลัด)</div>
+                            <h3 id="fc-main-text" class="text-lg sm:text-2xl font-extrabold text-white leading-relaxed">กำลังโหลดการ์ด...</h3>
+                            <p id="fc-sub-text" class="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed hidden"></p>
+                        </div>
+                        <div class="text-[11px] text-slate-400 flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-rotate text-amber-400"></i> แตะที่การ์ดเพื่อสลับด้าน (หัวข้อ ⟷ สูตรลัดช่วยจำ)
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between gap-3 mt-4">
+                        <button onclick="prevFlashcard()" class="px-4 py-2.5 bg-slate-200 dark:bg-police-700 hover:bg-slate-300 dark:hover:bg-police-600 rounded-xl text-xs font-bold transition flex items-center gap-2">
+                            <i class="fa-solid fa-chevron-left"></i> การ์ดก่อนหน้า
+                        </button>
+                        <button onclick="openCurrentFlashcardLesson()" class="px-4 py-2.5 bg-police-600 hover:bg-police-500 text-amber-300 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-book-open"></i> อ่านบทเรียนฉบับเต็ม
+                        </button>
+                        <button onclick="nextFlashcard()" class="px-4 py-2.5 bg-slate-200 dark:bg-police-700 hover:bg-slate-300 dark:hover:bg-police-600 rounded-xl text-xs font-bold transition flex items-center gap-2">
+                            การ์ดถัดไป <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ADMIN MANAGEMENT TAB -->
+        <section id="tab-admin" class="tab-content hidden space-y-6">
+            <div class="bg-white dark:bg-police-800/90 border border-slate-200 dark:border-police-600/40 rounded-2xl p-6 shadow-xl">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+                            <i class="fa-solid fa-database text-amber-400"></i> จัดการคลังเนื้อหา & ข้อสอบท้ายบท
+                        </h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">เพิ่ม/แก้ไขเนื้อหา ติดแท็กความยาก และนำเข้าข้อมูลด้วย Smart JSON</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-3 pt-2 border-t border-slate-200 dark:border-police-600/30">
+                    <button onclick="openSmartJsonModal('import')" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl text-xs shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> นำเข้าด้วย Smart JSON
+                    </button>
+                    <button onclick="openSmartJsonModal('export')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-code"></i> ดู/คัดลอกข้อมูล JSON ทั้งระบบ
+                    </button>
+                    <button onclick="openResetConfirmModal()" class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white font-bold rounded-xl text-xs shadow transition flex items-center gap-1.5 ml-auto">
+                        <i class="fa-solid fa-rotate-left"></i> รีเซ็ตเป็นเนื้อหาตั้งต้นครบ 6 วิชา
+                    </button>
+                </div>
+            </div>
+
+            <!-- Add/Edit Form -->
+            <div class="bg-white dark:bg-police-800/90 border border-slate-200 dark:border-police-600/40 rounded-2xl p-6 shadow-xl">
+                <h3 id="admin-form-title" class="text-lg font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-amber-400"></i> เพิ่ม/แก้ไขสรุปเนื้อหา
+                </h3>
+                <form id="form-lesson" onsubmit="event.preventDefault(); saveLessonForm();" class="space-y-4">
+                    <input type="hidden" id="edit-l-id" value="">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">หมวดวิชา</label>
+                            <select id="l-subject" required class="w-full bg-slate-50 dark:bg-police-900 border border-slate-300 dark:border-police-600 rounded-xl px-3 py-2 text-xs">
+                                <option value="math">1.1 ความสามารถทั่วไป</option>
+                                <option value="thai">1.2 ภาษาไทย</option>
+                                <option value="eng">1.3 ภาษาอังกฤษ</option>
+                                <option value="it">1.4 เทคโนโลยีสารสนเทศฯ</option>
+                                <option value="law">1.5 กฎหมายที่ประชาชนควรรู้</option>
+                                <option value="social">1.6 สังคม จริยธรรม อาเซียน</option>
+                            </select>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">หัวข้อบทเรียน (Title)</label>
+                            <input type="text" id="l-title" required placeholder="เช่น ความผิดเกี่ยวกับทรัพย์: ลัก วิ่ง ชิง ปล้น" class="w-full bg-slate-50 dark:bg-police-900 border border-slate-300 dark:border-police-600 rounded-xl px-3 py-2 text-xs">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">รายละเอียดเนื้อหา (รองรับ HTML เช่น &lt;strong&gt;, &lt;ul&gt;&lt;li&gt; และสูตรคณิต $...$)</label>
+                        <textarea id="l-content" rows="5" required placeholder="ใส่เนื้อหาสรุปที่นี่..." class="w-full bg-slate-50 dark:bg-police-900 border border-slate-300 dark:border-police-600 rounded-xl px-3 py-2 text-sm leading-relaxed"></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-amber-500 dark:text-amber-400 mb-1">💡 เทคนิค/สูตรลัดช่วยจำ</label>
+                            <input type="text" id="l-trick" placeholder="สูตรลัด หรือทริคจำด่วน..." class="w-full bg-slate-50 dark:bg-police-900 border border-amber-500/40 rounded-xl px-3 py-2 text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">🏷️ แท็ก (คั่นด้วยลูกน้ำ ,)</label>
+                            <input type="text" id="l-tags" placeholder="ออกสอบบ่อย, จำยาก, ต้องทวนซ้ำ" class="w-full bg-slate-50 dark:bg-police-900 border border-slate-300 dark:border-police-600 rounded-xl px-3 py-2 text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">URL รูปภาพประกอบ (ถ้ามี)</label>
+                            <input type="text" id="l-image-url" placeholder="https://..." class="w-full bg-slate-50 dark:bg-police-900 border border-slate-300 dark:border-police-600 rounded-xl px-3 py-2 text-xs">
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 pt-2">
+                        <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow transition">
+                            <i class="fa-solid fa-floppy-disk mr-1"></i> บันทึกเนื้อหา
+                        </button>
+                        <button type="button" onclick="resetLessonForm()" class="px-4 py-2 bg-slate-500 text-white font-bold rounded-xl text-xs hover:bg-slate-600 transition">
+                            เคลียร์แบบฟอร์ม
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Table of Lessons -->
+            <div class="bg-white dark:bg-police-800/90 border border-slate-200 dark:border-police-600/40 rounded-2xl shadow-xl p-6 space-y-4">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <h3 class="text-base font-bold text-slate-800 dark:text-white">
+                        รายการเนื้อหาทั้งหมด (<span id="admin-l-total-count">0</span> บทเรียน)
+                    </h3>
+                    <select id="admin-filter-subject" onchange="renderAdminTable()" class="bg-slate-50 dark:bg-police-900 border border-slate-300 dark:border-police-600 rounded-xl px-3 py-1.5 text-xs w-full sm:w-auto">
+                        <option value="ALL">ทุกวิชา</option>
+                        <option value="math">1.1 ความสามารถทั่วไป</option>
+                        <option value="thai">1.2 ภาษาไทย</option>
+                        <option value="eng">1.3 ภาษาอังกฤษ</option>
+                        <option value="it">1.4 เทคโนโลยีสารสนเทศฯ</option>
+                        <option value="law">1.5 กฎหมายที่ประชาชนควรรู้</option>
+                        <option value="social">1.6 สังคม จริยธรรม อาเซียน</option>
+                    </select>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead class="bg-slate-100 dark:bg-police-900 text-slate-700 dark:text-slate-300 uppercase font-bold border-b border-slate-200 dark:border-police-700">
+                            <tr>
+                                <th class="p-3 w-10">#</th>
+                                <th class="p-3 w-40">หมวดวิชา</th>
+                                <th class="p-3">หัวข้อบทเรียน</th>
+                                <th class="p-3 w-36">แท็ก / ควิซ</th>
+                                <th class="p-3 w-24 text-center">จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-lessons-tbody" class="divide-y divide-slate-200 dark:divide-police-700"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL 1: Interactive Mini-Quiz Modal -->
+    <div id="modal-quiz" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-police-800 border border-slate-200 dark:border-police-600 rounded-2xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center border-b pb-3 border-slate-200 dark:border-police-700">
+                <div>
+                    <span id="quiz-modal-subtitle" class="text-[11px] font-bold text-amber-500 uppercase">ทดสอบความเข้าใจท้ายบท</span>
+                    <h3 id="quiz-modal-title" class="font-extrabold text-slate-800 dark:text-white text-base sm:text-lg">ข้อสอบปรนัย</h3>
+                </div>
+                <button onclick="closeQuizModal()" class="text-slate-400 hover:text-white p-1"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div id="quiz-body-container" class="overflow-y-auto space-y-4 py-2 flex-1">
+                <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+                    <span id="quiz-progress-label">ข้อที่ 1 / 3</span>
+                    <span id="quiz-score-live" class="text-emerald-500">คะแนน: 0</span>
+                </div>
+                <div id="quiz-question-text" class="text-sm sm:text-base font-bold text-slate-800 dark:text-white bg-slate-50 dark:bg-police-900 p-4 rounded-xl border border-slate-200 dark:border-police-700 leading-relaxed"></div>
+                <div id="quiz-options-list" class="space-y-2.5"></div>
+                <div id="quiz-explanation-box" class="hidden p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed"></div>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-police-700">
+                <button onclick="closeQuizModal()" class="px-4 py-2 bg-slate-200 dark:bg-police-700 text-slate-700 dark:text-slate-200 rounded-xl text-xs font-bold">ปิดหน้าต่าง</button>
+                <button id="btn-next-quiz-q" onclick="nextQuizQuestion()" class="hidden px-5 py-2 bg-amber-500 hover:bg-amber-400 text-police-900 font-extrabold rounded-xl text-xs shadow">ข้อถัดไป <i class="fa-solid fa-arrow-right ml-1"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Smart JSON Import / Export -->
+    <div id="modal-smart-json" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-police-800 border border-slate-200 dark:border-police-600 rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b pb-3 border-slate-200 dark:border-police-700">
+                <h3 id="json-modal-title" class="font-bold text-slate-800 dark:text-white text-base"><i class="fa-solid fa-code text-purple-400 mr-1"></i> จัดการข้อมูล JSON</h3>
+                <button onclick="closeSmartJsonModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div>
+                <label id="json-modal-desc" class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">วางข้อความ JSON ในช่องนี้</label>
+                <textarea id="smart-json-textarea" rows="10" placeholder='[{"subject":"law","title":"ความหมายของกฎหมาย","content":"กฎหมายคือ...","trick":"จำง่ายๆว่า...","tags":["ออกสอบบ่อย"]}]' class="w-full bg-slate-50 dark:bg-police-900 border border-slate-300 dark:border-police-600 rounded-xl p-3 text-xs font-mono"></textarea>
+            </div>
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <button type="button" onclick="closeSmartJsonModal()" class="px-4 py-2 bg-slate-500 text-white rounded-xl text-xs font-bold">ปิด</button>
+                <button type="button" id="btn-json-copy" onclick="copyJsonTextarea()" class="hidden px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow-lg"><i class="fa-solid fa-copy mr-1"></i> คัดลอก JSON</button>
+                <button type="button" id="btn-json-import" onclick="processSmartJsonInput()" class="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl text-xs shadow-lg">นำเข้าข้อมูล</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: Exam Date Settings -->
+    <div id="modal-exam-date" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-police-800 border border-slate-200 dark:border-police-600 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b pb-3 border-slate-200 dark:border-police-700">
+                <h3 class="font-bold text-slate-800 dark:text-white text-base"><i class="fa-solid fa-calendar-day text-amber-400 mr-1"></i> ตั้งค่าวันสอบเป้าหมาย</h3>
+                <button onclick="closeExamDateModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold mb-1 text-slate-700 dark:text-slate-300">ชื่อสนามสอบ / เป้าหมาย</label>
+                    <input type="text" id="input-exam-title" placeholder="สอบข้อเขียน นสต. สายปราบปราม" class="w-full bg-slate-50 dark:bg-police-900 border border-slate-300 dark:border-police-600 rounded-xl px-3 py-2 text-xs">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1 text-slate-700 dark:text-slate-300">วันที่สอบ</label>
+                    <input type="date" id="input-exam-date" class="w-full bg-slate-50 dark:bg-police-900 border border-slate-300 dark:border-police-600 rounded-xl px-3 py-2 text-xs">
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeExamDateModal()" class="px-4 py-2 bg-slate-500 text-white rounded-xl text-xs font-bold">ยกเลิก</button>
+                <button onclick="saveExamDateSetting()" class="px-5 py-2 bg-amber-500 hover:bg-amber-400 text-police-900 font-extrabold rounded-xl text-xs">บันทึก</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: In-page Confirmation Modal -->
+    <div id="modal-confirm" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-police-800 border border-slate-200 dark:border-police-600 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <h3 id="confirm-modal-title" class="font-bold text-slate-800 dark:text-white text-base flex items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation text-amber-400"></i> ยืนยันการทำรายการ
+            </h3>
+            <p id="confirm-modal-msg" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeConfirmModal()" class="px-4 py-2 bg-slate-500 text-white rounded-xl text-xs font-bold">ยกเลิก</button>
+                <button id="btn-confirm-ok" class="px-5 py-2 bg-red-600 hover:bg-red-500 text-white font-bold rounded-xl text-xs">ยืนยัน</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APP ENGINE -->
+    <script>
+        const STORAGE_KEYS = {
+            LESSONS: 'rtp_prep_lessons_v3',
+            PROGRESS: 'rtp_prep_progress_v3',
+            THEME: 'rtp_prep_theme_v3',
+            EXAM_DATE: 'rtp_prep_exam_date_v3',
+            EXAM_TITLE: 'rtp_prep_exam_title_v3'
+        };
+
+        const SUBJECT_METADATA = {
+            math: { name: '1.1 ความสามารถทั่วไป', color: 'from-blue-600 to-indigo-700', icon: 'fa-calculator', desc: 'อนุกรม, ร้อยละ-เปอร์เซ็นต์, สมการ, ตรรกศาสตร์' },
+            thai: { name: '1.2 ภาษาไทย', color: 'from-amber-600 to-red-700', icon: 'fa-language', desc: 'คำราชาศัพท์, คำพ้อง-สมาสสนธิ, การจับใจความสำคัญ' },
+            eng: { name: '1.3 ภาษาต่างประเทศ (อังกฤษ)', color: 'from-emerald-600 to-teal-700', icon: 'fa-earth-americas', desc: 'Subject-Verb Agreement, Tenses, Active-Passive, สนทนา' },
+            it: { name: '1.4 เทคโนโลยีสารสนเทศฯ', color: 'from-cyan-600 to-blue-800', icon: 'fa-laptop-code', desc: 'ฮาร์ดแวร์-ซอฟต์แวร์, เครือข่าย, Cyber Security & พ.ร.บ.คอมฯ' },
+            law: { name: '1.5 กฎหมายที่ประชาชนควรรู้', color: 'from-purple-600 to-police-700', icon: 'fa-scale-balanced', desc: 'อาญา (ม.68, ทรัพย์), แพ่งและพาณิชย์, พ.ร.บ.ตำรวจแห่งชาติ' },
+            social: { name: '1.6 สังคม จริยธรรม อาเซียน', color: 'from-rose-600 to-pink-700', icon: 'fa-users', desc: 'จริยธรรมตำรวจและธรรมาภิบาล, กฎบัตรและประชาคมอาเซียน' }
+        };
+
+        const DEFAULT_LESSONS = [
+            {
+                id: 'l_math_01',
+                subject: 'math',
+                title: 'เทคนิคพิชิตโจทย์อนุกรม (Series & Number Patterns)',
+                tags: ['ออกสอบบ่อย'],
+                content: `<p>ข้อสอบอนุกรมในสนามสอบ นสต. มักออก 3-5 ข้อ โดยแบ่งเป็นรูปแบบหลักที่ต้องเช็กตามลำดับ ดังยิ่ง:</p>
+                <ul>
+                    <li><strong>1. อนุกรมตีแฉก (บวก/ลบสะสม 1 ถึง 3 ชั้น):</strong> ใช้เมื่อตัวเลขเพิ่มขึ้นหรือลดลงอย่างค่อยเป็นค่อยไป เช่น 5, 9, 16, 26, 39, ... (ระยะห่างคือ +4, +7, +10, +13 ชั้นที่สองห่างทีละ +3 ดังนั้นตัวถัดไปบวก 16 ได้ <strong>55</strong>)</li>
+                    <li><strong>2. อนุกรมก้าวกระโดด (คูณ/ยกกำลัง):</strong> เมื่อตัวเลขพุ่งขึ้นเร็วมาก ให้เช็กการคูณสะสม หรือเลขยกกำลัง เช่น $1^2, 2^2, 3^2, 4^2$ หรือ $2^n \\pm 1$</li>
+                    <li><strong>3. อนุกรมข้ามเว้นระยะ (อนุกรมซ้อน 2 ชุด):</strong> สังเกตเมื่อตัวเลขมีลักษณะ <em>ขึ้นๆ ลงๆ สลับฟันปลา</em> ให้แยกคิดเลขตำแหน่งคี่และเลขตำแหน่งคู่แยกจากกัน</li>
+                    <li><strong>4. อนุกรมฟีโบนัชชี (สะสมผลบวก):</strong> พจน์หน้าบวกกันได้พจน์ถัดไป เช่น 2, 3, 5, 8, 13, 21, ... ($13+21 = 34$)</li>
+                </ul>`,
+                trick: 'ขึ้นช้าให้ "ตีแฉกลบกัน" | ขึ้นไวให้ "คูณหรือยกกำลัง" | ขึ้นๆ ลงๆ ยาวเกิน 6 ตัวให้ "แยกคิดเลขคู่-เลขคี่"',
+                imageUrl: '',
+                quiz: [
+                    {
+                        q: 'จงหาตัวเลขถัดไปของอนุกรม: 4, 9, 19, 34, 54, ...',
+                        options: ['74', '79', '84', '89'],
+                        answer: 1,
+                        explain: 'ตีแฉกชั้นที่ 1 ได้ +5, +10, +15, +20 ดังนั้นระยะห่างตัวถัดไปคือ +25 นำ 54 + 25 = 79'
+                    },
+                    {
+                        q: 'จงหาตัวเลขถัดไปของอนุกรมสลับฟันปลา: 10, 50, 13, 45, 16, 40, ...',
+                        options: ['18', '19', '35', '21'],
+                        answer: 1,
+                        explain: 'แยก 2 ชุด: ตำแหน่งคี่ (10, 13, 16, ...) เพิ่มทีละ +3 ดังนั้นตัวถัดไปคือ 16 + 3 = 19'
+                    }
+                ]
+            },
+            {
+                id: 'l_math_02',
+                subject: 'math',
+                title: 'ร้อยละ เปอร์เซ็นต์ กำไร-ขาดทุน และดอกเบี้ย',
+                tags: ['ออกสอบบ่อย', 'ต้องทวนซ้ำ'],
+                content: `<p>การคำนวณร้อยละและกำไร-ขาดทุน ให้ยึด <strong>"ทุน = 100%"</strong> เสมอ เว้นแต่โจทย์จะถามเทียบกับราคาขาย:</p>
+                <ul>
+                    <li><strong>ขายได้กำไร $x\\%$:</strong> ราคาขาย $= (100 + x)\\%$ ของทุน เช่น กำไร 20% แปลว่า ทุน 100 ขาย 120</li>
+                    <li><strong>ขายขาดทุน $x\\%$:</strong> ราคาขาย $= (100 - x)\\%$ ของทุน เช่น ขาดทุน 15% แปลว่า ทุน 100 ขาย 85</li>
+                    <li><strong>สูตรลดราคาซ้อน 2 ครั้ง:</strong> หากลดราคา $a\\%$ แล้วลดเพิ่มอีก $b\\%$ จะลดรวมเท่ากับ $$(a + b) - \\frac{a \\times b}{100}$$</li>
+                    <li><strong>สูตรดอกเบี้ยเชิงเดียว (Simple Interest):</strong> $$I = \\frac{P \\times R \\times T}{100}$$ เมื่อ $I$ = ดอกเบี้ย, $P$ = เงินต้น, $R$ = อัตราดอกเบี้ยต่อปี (%), $T$ = เวลา (ปี)</li>
+                </ul>`,
+                trick: 'จำง่าย: "บอกกำไร/ขาดทุน ให้เทียบบัญญัติไตรยางศ์กับ 100 เสมอ" และลดราคา 20% ตามด้วย 10% ไม่ใช่ลด 30% แต่ลดจริง 28%!',
+                imageUrl: '',
+                quiz: [
+                    {
+                        q: 'ติดป้ายราคาสินค้าไว้ 1,000 บาท ลดราคาครั้งแรก 20% และลดเพิ่มให้สมาชิกอีก 10% ลูกค้าต้องจ่ายเงินกี่บาท?',
+                        options: ['700 บาท', '720 บาท', '750 บาท', '780 บาท'],
+                        answer: 1,
+                        explain: 'ลดครั้งแรก 20% เหลือ 800 บาท จากนั้นลดเพิ่มอีก 10% ของ 800 (คือ 80 บาท) เหลือจ่ายจริง 720 บาท'
+                    }
+                ]
+            },
+            {
+                id: 'l_thai_01',
+                subject: 'thai',
+                title: 'หลักการใช้คำราชาศัพท์: คำว่า "ทรง" และลำดับพระบรมวงศานุวงศ์',
+                tags: ['ออกสอบบ่อย'],
+                content: `<p><strong>1. กฎเหล็กการใช้คำว่า "ทรง":</strong></p>
+                <ul>
+                    <li><strong>ห้ามใช้ "ทรง" นำหน้าคำกริยาราชาศัพท์อยู่แล้ว:</strong> เช่น เสด็จ, เสวย, ประทับ, บรรทม, ตรัส, ประชวร, สวรรคต (<strong>ยกเว้น</strong> "ทรงผนวช")</li>
+                    <li><strong>ใช้ "ทรง" นำหน้าคำนามสามัญ / กริยาสามัญ:</strong> เช่น ทรงม้า, ทรงดนตรี, ทรงกีฬา, ทรงเจิม</li>
+                    <li><strong>ใช้ "ทรง" นำหน้าคำนามราชาศัพท์:</strong> เช่น ทรงพระอักษร, ทรงพระสุบิน, ทรงพระประชวร</li>
+                </ul>`,
+                trick: 'กริยาราชาศัพท์แท้ ห้ามเติม "ทรง" ซ้อน! (ยกเว้นมีคำว่า "พระ..." คั่นกลาง เช่น ทรงพระประชวร) | ของเล็ก = ทูลเกล้าฯ, ของใหญ่ = น้อมเกล้าฯ',
+                imageUrl: '',
+                quiz: [
+                    {
+                        q: 'ข้อใดใช้คำราชาศัพท์ได้ถูกต้องตามหลักภาษาไทย?',
+                        options: ['ทรงเสวยพระกระยาหาร', 'ทรงพระประชวร', 'ทรงเสด็จพระราชดำเนิน', 'ทรงบรรทมหลับ'],
+                        answer: 1,
+                        explain: '"ทรงพระประชวร" ถูกต้อง เพราะมีคำว่า "พระ" นำหน้าคำว่าประชวร ส่วนเสวย เสด็จ บรรทม เป็นกริยาราชาศัพท์แล้ว ห้ามเติมทรง'
+                    }
+                ]
+            },
+            {
+                id: 'l_eng_01',
+                subject: 'eng',
+                title: 'Grammar เสาหลัก: Subject-Verb Agreement, Tenses & Active-Passive',
+                tags: ['ออกสอบบ่อย', 'จำยาก'],
+                content: `<p><strong>1. กฎ Subject-Verb Agreement ที่ออกสอบทุกปี:</strong></p>
+                <ul>
+                    <li><strong>ประธานเชื่อมด้วย with, along with, as well as:</strong> กริยาผันตาม <strong>ประธานตัวหน้าสุด (S1)</strong> เสมอ เช่น <em>The officer, along with his teammates, <strong>is</strong> on duty.</em></li>
+                    <li><strong>Each, Every, Everyone, Somebody:</strong> ถือเป็น <strong>เอกพจน์เสมอ</strong> ใช้กับ Verb เติม -s</li>
+                    <li><strong>A number of + N.พหูพจน์ + V.พหูพจน์</strong> แต่ <strong>The number of + N.พหูพจน์ + V.เอกพจน์</strong></li>
+                </ul>
+                <p><strong>2. โครงสร้าง Active vs Passive Voice:</strong> เมื่อประธานถูกกระทำ ใช้ <strong>Verb to be + V.3</strong></p>`,
+                trick: 'เจอ along with / as well as ให้มองข้ามไปดูประธานตัวแรกสุด! | A number of = พหูพจน์, The number of = เอกพจน์',
+                imageUrl: '',
+                quiz: [
+                    {
+                        q: 'The police captain, together with five officers, _______ investigating the crime scene now.',
+                        options: ['is', 'are', 'were', 'have been'],
+                        answer: 0,
+                        explain: 'ประธานตัวแรกคือ The police captain (เอกพจน์) และมีคำบอกเวลา now จึงใช้ is'
+                    }
+                ]
+            },
+            {
+                id: 'l_it_01',
+                subject: 'it',
+                title: 'ฮาร์ดแวร์ ซอฟต์แวร์ หน่วยความจำ และระบบเครือข่ายพื้นฐาน',
+                tags: ['ออกสอบบ่อย'],
+                content: `<p><strong>1. หน่วยความจำหลัก (Memory):</strong></p>
+                <ul>
+                    <li><strong>RAM:</strong> หน่วยความจำชั่วคราว <strong>ไฟดับข้อมูลหาย (Volatile)</strong></li>
+                    <li><strong>ROM:</strong> หน่วยความจำถาวร <strong>ไฟดับข้อมูลไม่หาย (Non-volatile)</strong></li>
+                </ul>
+                <p><strong>2. ระบบเครือข่าย:</strong> IPv4 มีขนาด <strong>32 บิต</strong> ส่วน IPv6 มีขนาด <strong>128 บิต</strong> และ DNS ทำหน้าที่แปลงชื่อเว็บเป็น IP Address</p>`,
+                trick: 'RAM = ชั่วคราว (ไฟดับข้อมูลหาย) | ROM = ถาวร (ไฟดับไม่หาย) | IPv4 = 32 บิต, IPv6 = 128 บิต',
+                imageUrl: '',
+                quiz: [
+                    {
+                        q: 'หน่วยความจำชนิดใดที่ข้อมูลจะสูญหายทันทีเมื่อไม่มีกระแสไฟฟ้าหล่อเลี้ยง (ปิดเครื่อง)?',
+                        options: ['ROM', 'RAM', 'SSD', 'Flash Drive'],
+                        answer: 1,
+                        explain: 'RAM เป็นหน่วยความจำแบบ Volatile ซึ่งต้องมีไฟเลี้ยงตลอดเวลา'
+                    }
+                ]
+            },
+            {
+                id: 'l_law_01',
+                subject: 'law',
+                title: 'การป้องกันโดยชอบด้วยกฎหมาย (ป.อาญา มาตรา 68) และความจำเป็น (ม.67)',
+                tags: ['ออกสอบบ่อย'],
+                content: `<p><strong>1. การป้องกัน (มาตรา 68):</strong> จำต้องป้องกันสิทธิให้พ้นภยันตรายที่เกิดจากการประทุษร้ายอันละเมิดต่อกฎหมายและใกล้จะถึง พอสมควรแก่เหตุ ถือว่า <strong>"ไม่มีความผิด"</strong></p>
+                <p><strong>2. ความจำเป็น (มาตรา 67):</strong> กระทำเพื่อหลีกเลี่ยงภยันตรายโดยไม่ได้ก่อภัยขึ้นเอง <strong>"มีความผิด แต่กฎหมายยกเว้นโทษให้"</strong></p>`,
+                trick: 'ป้องกัน (ม.68) = กระทำต่อผู้ก่อภัย -> "ไม่มีความผิด" | จำเป็น (ม.67) = กระทำต่อคนนอกเพื่อเอาตัวรอด -> "มีความผิด แต่ไม่ต้องรับโทษ"',
+                imageUrl: '',
+                quiz: [
+                    {
+                        q: 'การกระทำที่เป็น "การป้องกันโดยชอบด้วยกฎหมาย" ตาม ป.อาญา มาตรา 68 มีผลทางกฎหมายอย่างไร?',
+                        options: ['มีความผิด แต่ไม่ต้องรับโทษ', 'ผู้นั้นไม่มีความผิดเลย', 'มีความผิด แต่ศาลลดโทษให้กึ่งหนึ่ง', 'มีความผิดฐานประมาท'],
+                        answer: 1,
+                        explain: 'ตาม ป.อาญา มาตรา 68 ส่งผลให้ "ผู้นั้นไม่มีความผิด"'
+                    }
+                ]
+            },
+            {
+                id: 'l_social_01',
+                subject: 'social',
+                title: 'จริยธรรมตำรวจ อุดมคติตำรวจ 9 ประการ และหลักธรรมาภิบาล',
+                tags: ['ออกสอบบ่อย'],
+                content: `<p><strong>อุดมคติตำรวจ 9 ประการ:</strong> ข้อ 1 เคารพเอื้อเฟื้อต่อหน้าที่ | ข้อ 2 กรุณาปรานีต่อประชาชน | ข้อ 3 อดทนต่อความเจ็บใจ | ... | ข้อ 9 รักษาความไม่ประมาทเสมอชีวิต</p>
+                <p><strong>หลักธรรมาภิบาล 6 หลัก:</strong> นิติธรรม, คุณธรรม, ความโปร่งใส, การมีส่วนร่วม, ความรับผิดชอบ, และความคุ้มค่า</p>`,
+                trick: 'อุดมคติตำรวจ: ข้อ 1 = เคารพเอื้อเฟื้อต่อหน้าที่ | ข้อ 2 = กรุณาปรานีต่อประชาชน | ข้อ 9 = รักษาความไม่ประมาทเสมอชีวิต',
+                imageUrl: '',
+                quiz: [
+                    {
+                        q: 'อุดมคติตำรวจข้อสุดท้าย (ข้อที่ 9) คือข้อใด?',
+                        options: ['เคารพเอื้อเฟื้อต่อหน้าที่', 'กรุณาปรานีต่อประชาชน', 'ดำรงตนในยุติธรรม', 'รักษาความไม่ประมาทเสมอชีวิต'],
+                        answer: 3,
+                        explain: 'อุดมคติตำรวจข้อที่ 9 คือ รักษาความไม่ประมาทเสมอชีวิต'
+                    }
+                ]
+            }
+        ];
+
+        let state = {
+            lessons: [],
+            readProgress: [],
+            currentSubject: null,
+            currentLessonId: null,
+            activeTagFilter: 'ALL',
+            readingFontSizeStep: 0,
+            examDate: '',
+            examTitle: 'สอบข้อเขียน นสต. สายปราบปราม',
+            pomoMode: 'focus',
+            pomoSecondsLeft: 25 * 60,
+            pomoRunning: false,
+            pomoInterval: null,
+            pomoSessions: 0,
+            fcList: [],
+            fcIndex: 0,
+            fcFlipped: false,
+            quizItems: [],
+            quizIndex: 0,
+            quizScore: 0,
+            quizAnswered: false
+        };
+
+        function safeGetStorage(key, fallback) {
+            try { const val = localStorage.getItem(key); return val !== null ? val : fallback; } catch (e) { return fallback; }
+        }
+        function safeSetStorage(key, val) {
+            try { localStorage.setItem(key, val); } catch (e) {}
+        }
+
+        window.onload = function() {
+            initTheme();
+            initDatabase();
+            initExamCountdown();
+            updatePomodoroUI();
+            switchTab('dashboard');
+        };
+
+        function initTheme() {
+            const savedTheme = safeGetStorage(STORAGE_KEYS.THEME, 'dark');
+            if (savedTheme === 'light') document.documentElement.classList.remove('dark');
+            else document.documentElement.classList.add('dark');
+            updateThemeIcon();
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            safeSetStorage(STORAGE_KEYS.THEME, isDark ? 'dark' : 'light');
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const icon = document.getElementById('theme-icon');
+            if (!icon) return;
+            const isDark = document.documentElement.classList.contains('dark');
+            icon.className = isDark ? 'fa-solid fa-sun text-lg text-amber-300' : 'fa-solid fa-moon text-lg text-amber-200';
+        }
+
+        function initDatabase() {
+            const storedL = safeGetStorage(STORAGE_KEYS.LESSONS, null);
+            if (storedL) {
+                try {
+                    const parsed = JSON.parse(storedL);
+                    state.lessons = Array.isArray(parsed) && parsed.length > 0 ? parsed : JSON.parse(JSON.stringify(DEFAULT_LESSONS));
+                } catch (e) {
+                    state.lessons = JSON.parse(JSON.stringify(DEFAULT_LESSONS));
+                }
+            } else {
+                state.lessons = JSON.parse(JSON.stringify(DEFAULT_LESSONS));
+                safeSetStorage(STORAGE_KEYS.LESSONS, JSON.stringify(state.lessons));
+            }
+            try { state.readProgress = JSON.parse(safeGetStorage(STORAGE_KEYS.PROGRESS, '[]')); } catch (e) { state.readProgress = []; }
+        }
+
+        function saveState() {
+            safeSetStorage(STORAGE_KEYS.LESSONS, JSON.stringify(state.lessons));
+            safeSetStorage(STORAGE_KEYS.PROGRESS, JSON.stringify(state.readProgress));
+        }
+
+        function showToast(message, type = 'amber') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const bgClass = type === 'red' ? 'bg-red-900 border-red-500' : type === 'green' ? 'bg-emerald-900 border-emerald-500' : 'bg-police-800 border-police-gold';
+            toast.className = `px-4 py-3 rounded-xl border shadow-xl text-xs font-bold text-white flex items-center gap-2 transform transition-all duration-300 opacity-0 translate-y-2 ${bgClass}`;
+            toast.innerHTML = `<i class="fa-solid fa-info-circle text-amber-400"></i> <span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.remove('opacity-0', 'translate-y-2'), 10);
+            setTimeout(() => { toast.classList.add('opacity-0', 'translate-y-2'); setTimeout(() => toast.remove(), 300); }, 2800);
+        }
+
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`tab-${tabId}`);
+            if (target) target.classList.remove('hidden');
+            document.getElementById('mobile-menu').classList.add('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('bg-police-600/80', 'ring-1', 'ring-amber-400/50'));
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) activeNav.classList.add('bg-police-600/80', 'ring-1', 'ring-amber-400/50');
+
+            if (tabId === 'dashboard') renderDashboard();
+            if (tabId === 'flashcards') initFlashcards();
+            if (tabId === 'admin') renderAdminTable();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function triggerMathRender() {
+            setTimeout(() => {
+                if (window.renderMathInElement) {
+                    renderMathInElement(document.body, {
+                        delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]
+                    });
+                }
+            }, 50);
+        }
+
+        function initExamCountdown() {
+            let savedDate = safeGetStorage(STORAGE_KEYS.EXAM_DATE, '');
+            let savedTitle = safeGetStorage(STORAGE_KEYS.EXAM_TITLE, 'สอบข้อเขียน นสต. สายปราบปราม');
+            if (!savedDate) {
+                const defaultTarget = new Date();
+                defaultTarget.setDate(defaultTarget.getDate() + 45);
+                savedDate = defaultTarget.toISOString().split('T')[0];
+                safeSetStorage(STORAGE_KEYS.EXAM_DATE, savedDate);
+            }
+            state.examDate = savedDate;
+            state.examTitle = savedTitle;
+            renderExamCountdown();
+        }
+
+        function renderExamCountdown() {
+            const labelEl = document.getElementById('exam-target-label');
+            const daysEl = document.getElementById('countdown-days');
+            const subEl = document.getElementById('countdown-subtext');
+            if (!daysEl) return;
+            labelEl.innerText = `เป้าหมาย: ${state.examTitle}`;
+            const now = new Date(); now.setHours(0, 0, 0, 0);
+            const target = new Date(state.examDate + 'T00:00:00');
+            const diffDays = Math.ceil((target - now) / (1000 * 60 * 60 * 24));
+            if (isNaN(diffDays)) { daysEl.innerText = '--'; subEl.innerText = 'ยังไม่ได้ระบุวันสอบ'; }
+            else if (diffDays > 0) { daysEl.innerText = `${diffDays} วัน`; subEl.innerText = `ถึงกำหนดสอบ (${formatThaiDate(state.examDate)})`; }
+            else if (diffDays === 0) { daysEl.innerText = 'วันนี้!'; subEl.innerText = 'ขอให้ทำข้อสอบได้เต็มที่ สู้ๆ!'; }
+            else { daysEl.innerText = `ผ่านแล้ว ${Math.abs(diffDays)} วัน`; subEl.innerText = 'กำหนดรอบใหม่ได้ที่ตั้งค่า'; }
+        }
+
+        function formatThaiDate(isoStr) {
+            try { return new Date(isoStr + 'T00:00:00').toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' }); } catch (e) { return isoStr; }
+        }
+
+        function openExamDateModal() {
+            document.getElementById('input-exam-title').value = state.examTitle;
+            document.getElementById('input-exam-date').value = state.examDate;
+            document.getElementById('modal-exam-date').classList.remove('hidden');
+        }
+
+        function closeExamDateModal() { document.getElementById('modal-exam-date').classList.add('hidden'); }
+
+        function saveExamDateSetting() {
+            const titleVal = document.getElementById('input-exam-title').value.trim() || 'สอบข้อเขียน นสต. สายปราบปราม';
+            const dateVal = document.getElementById('input-exam-date').value;
+            if (!dateVal) return showToast('กรุณาเลือกวันที่สอบ', 'red');
+            state.examTitle = titleVal; state.examDate = dateVal;
+            safeSetStorage(STORAGE_KEYS.EXAM_TITLE, titleVal);
+            safeSetStorage(STORAGE_KEYS.EXAM_DATE, dateVal);
+            renderExamCountdown();
+            closeExamDateModal();
+            showToast('บันทึกเป้าหมายวันสอบเรียบร้อย!', 'green');
+        }
+
+        function setPomodoroMode(mode) {
+            if (state.pomoRunning) { clearInterval(state.pomoInterval); state.pomoRunning = false; }
+            state.pomoMode = mode;
+            state.pomoSecondsLeft = mode === 'focus' ? 25 * 60 : 5 * 60;
+            const btnFocus = document.getElementById('pomo-mode-focus');
+            const btnBreak = document.getElementById('pomo-mode-break');
+            if (mode === 'focus') {
+                btnFocus.className = 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-500 text-police-900';
+                btnBreak.className = 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-200 dark:bg-police-900 text-slate-600 dark:text-slate-300';
+            } else {
+                btnBreak.className = 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-500 text-police-900';
+                btnFocus.className = 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-200 dark:bg-police-900 text-slate-600 dark:text-slate-300';
+            }
+            updatePomodoroUI();
+        }
+
+        function togglePomodoro() {
+            if (state.pomoRunning) {
+                clearInterval(state.pomoInterval);
+                state.pomoRunning = false;
+                updatePomodoroUI();
+            } else {
+                state.pomoRunning = true;
+                updatePomodoroUI();
+                state.pomoInterval = setInterval(() => {
+                    if (state.pomoSecondsLeft > 0) {
+                        state.pomoSecondsLeft--;
+                        updatePomodoroUI();
+                    } else {
+                        clearInterval(state.pomoInterval);
+                        state.pomoRunning = false;
+                        if (state.pomoMode === 'focus') {
+                            state.pomoSessions++;
+                            showToast('ครบ 25 นาทีแล้ว! พักสายตา 5 นาทีครับ', 'green');
+                            setPomodoroMode('break');
+                        } else {
+                            showToast('หมดเวลาพัก 5 นาที พร้อมลุยอ่านต่อ!', 'amber');
+                            setPomodoroMode('focus');
+                        }
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetPomodoro() {
+            if (state.pomoRunning) { clearInterval(state.pomoInterval); state.pomoRunning = false; }
+            state.pomoSecondsLeft = state.pomoMode === 'focus' ? 25 * 60 : 5 * 60;
+            updatePomodoroUI();
+        }
+
+        function updatePomodoroUI() {
+            const mins = Math.floor(state.pomoSecondsLeft / 60);
+            const secs = state.pomoSecondsLeft % 60;
+            const disp = document.getElementById('pomodoro-display');
+            if (!disp) return;
+            disp.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            document.getElementById('pomodoro-sessions').innerText = state.pomoSessions;
+            const badge = document.getElementById('pomodoro-status-badge');
+            const btn = document.getElementById('btn-pomo-start');
+            if (state.pomoRunning) {
+                badge.innerText = state.pomoMode === 'focus' ? 'กำลังโฟกัส...' : 'กำลังพักผ่อน...';
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-600 dark:text-amber-300 text-center animate-pulse';
+                btn.innerHTML = `<i class="fa-solid fa-pause"></i> หยุดชั่วคราว`;
+                btn.className = 'flex-1 py-2 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-xl text-xs shadow transition flex items-center justify-center gap-1.5';
+            } else {
+                badge.innerText = state.pomoMode === 'focus' ? 'พร้อมอ่าน' : 'โหมดพัก';
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 text-center';
+                btn.innerHTML = `<i class="fa-solid fa-play"></i> เริ่มจับเวลา`;
+                btn.className = 'flex-1 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow transition flex items-center justify-center gap-1.5';
+            }
+        }
+
+        function setTagFilter(tag) {
+            state.activeTagFilter = tag;
+            document.querySelectorAll('.tag-chip').forEach(btn => {
+                if (btn.getAttribute('data-tag') === tag) {
+                    btn.className = 'tag-chip px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-police-900 transition';
+                } else {
+                    btn.className = 'tag-chip px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-police-900 text-slate-600 dark:text-slate-300 hover:border-amber-400 border border-transparent transition';
+                }
+            });
+            handleGlobalSearch();
+        }
+
+        function clearGlobalSearch() {
+            document.getElementById('global-search-input').value = '';
+            setTagFilter('ALL');
+        }
+
+        function handleGlobalSearch() {
+            const q = (document.getElementById('global-search-input').value || '').trim().toLowerCase();
+            const clearBtn = document.getElementById('btn-clear-search');
+            const panel = document.getElementById('search-results-panel');
+            const listEl = document.getElementById('search-results-list');
+            const countEl = document.getElementById('search-results-count');
+
+            if (q.length > 0) clearBtn.classList.remove('hidden'); else clearBtn.classList.add('hidden');
+            if (q === '' && state.activeTagFilter === 'ALL') { panel.classList.add('hidden'); return; }
+
+            const matched = state.lessons.filter(l => {
+                const textMatch = !q || l.title.toLowerCase().includes(q) || l.content.toLowerCase().includes(q) || (l.trick && l.trick.toLowerCase().includes(q)) || (l.tags && l.tags.some(t => t.toLowerCase().includes(q)));
+                let tagMatch = true;
+                if (state.activeTagFilter === 'UNREAD') tagMatch = !state.readProgress.includes(l.id);
+                else if (state.activeTagFilter !== 'ALL') tagMatch = Array.isArray(l.tags) && l.tags.includes(state.activeTagFilter);
+                return textMatch && tagMatch;
+            });
+
+            panel.classList.remove('hidden');
+            countEl.innerText = `พบเนื้อหาที่ตรงเงื่อนไข ${matched.length} บทเรียน`;
+            listEl.innerHTML = '';
+            if (matched.length === 0) {
+                listEl.innerHTML = `<div class="col-span-2 text-center py-6 text-xs text-slate-400">ไม่พบบทเรียนที่ตรงกับคำค้นหาหรือแท็กที่เลือก</div>`;
+                return;
+            }
+            matched.forEach(l => {
+                const sub = SUBJECT_METADATA[l.subject] || { name: l.subject };
+                const isRead = state.readProgress.includes(l.id);
+                const item = document.createElement('div');
+                item.className = 'p-3.5 rounded-xl bg-slate-50 dark:bg-police-900 border border-slate-200 dark:border-police-700 hover:border-amber-400 cursor-pointer transition flex items-center justify-between gap-3';
+                item.onclick = () => { state.currentSubject = l.subject; openReadingView(l.id); };
+                item.innerHTML = `
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-police-700 text-amber-300">${sub.name}</span>
+                            ${isRead ? '<span class="text-[10px] font-bold text-emerald-500"><i class="fa-solid fa-check"></i> อ่านแล้ว</span>' : ''}
+                        </div>
+                        <div class="font-bold text-xs sm:text-sm text-slate-800 dark:text-white truncate">${l.title}</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 text-xs shrink-0"></i>
+                `;
+                listEl.appendChild(item);
+            });
+        }
+
+        function renderDashboard() {
+            const grid = document.getElementById('subject-cards-grid');
+            grid.innerHTML = '';
+            const totalLessons = state.lessons.length;
+            const validReadCount = state.lessons.filter(l => state.readProgress.includes(l.id)).length;
+            const totalQuizzes = state.lessons.reduce((acc, l) => acc + (Array.isArray(l.quiz) ? l.quiz.length : 0), 0);
+
+            document.getElementById('hero-total-lessons').innerText = totalLessons;
+            document.getElementById('hero-total-quizzes').innerText = totalQuizzes;
+            const overallPct = totalLessons > 0 ? Math.round((validReadCount / totalLessons) * 100) : 0;
+            document.getElementById('overall-progress-text').innerText = `${validReadCount} / ${totalLessons} บทเรียน (${overallPct}%)`;
+            document.getElementById('overall-progress-bar').style.width = `${overallPct}%`;
+
+            Object.keys(SUBJECT_METADATA).forEach(subKey => {
+                const sub = SUBJECT_METADATA[subKey];
+                const subLessons = state.lessons.filter(l => l.subject === subKey);
+                const subReadCount = subLessons.filter(l => state.readProgress.includes(l.id)).length;
+                const accuracy = subLessons.length > 0 ? Math.round((subReadCount / subLessons.length) * 100) : 0;
+                const subQuizCount = subLessons.reduce((s, l) => s + (Array.isArray(l.quiz) ? l.quiz.length : 0), 0);
+                
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-police-800/80 border border-slate-200 dark:border-police-600/40 rounded-2xl p-5 shadow-md flex flex-col justify-between cursor-pointer hover:border-amber-400 hover:-translate-y-0.5 transition-all";
+                card.onclick = () => openSubjectList(subKey);
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-11 h-11 rounded-xl bg-gradient-to-br ${sub.color} flex items-center justify-center text-white font-bold shadow">
+                                <i class="fa-solid ${sub.icon} text-lg"></i>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-300 border border-amber-500/20">
+                                    <i class="fa-solid fa-circle-question mr-0.5"></i> ${subQuizCount} ข้อ
+                                </span>
+                                <span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-police-900 text-slate-700 dark:text-slate-300">
+                                    ${subLessons.length} บทเรียน
+                                </span>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-base text-slate-800 dark:text-white">${sub.name}</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${sub.desc}</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-200 dark:border-police-600/30">
+                        <div class="flex justify-between text-xs mb-1.5">
+                            <span class="text-slate-500 dark:text-slate-400">ความคืบหน้าการอ่าน</span>
+                            <span class="font-bold ${accuracy === 100 && subLessons.length > 0 ? 'text-emerald-500' : 'text-amber-500'}">${subReadCount}/${subLessons.length} (${accuracy}%)</span>
+                        </div>
+                        <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                            <div class="${accuracy === 100 ? 'bg-emerald-500' : 'bg-amber-400'} h-full rounded-full transition-all duration-500" style="width: ${accuracy}%"></div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openSubjectList(subjectKey) {
+            state.currentSubject = subjectKey;
+            const sub = SUBJECT_METADATA[subjectKey];
+            document.getElementById('list-subject-title').innerHTML = `<i class="fa-solid ${sub.icon} text-amber-400"></i> ${sub.name}`;
+            const subLessons = state.lessons.filter(l => l.subject === subjectKey);
+            const readCount = subLessons.filter(l => state.readProgress.includes(l.id)).length;
+            const pct = subLessons.length > 0 ? Math.round((readCount / subLessons.length) * 100) : 0;
+            document.getElementById('list-subject-progress').style.width = `${pct}%`;
+            document.getElementById('list-subject-stats').innerText = `อ่านแล้ว ${readCount} / ${subLessons.length} บทเรียน (${pct}%)`;
+
+            const container = document.getElementById('lesson-list-container');
+            container.innerHTML = '';
+            if (subLessons.length === 0) {
+                container.innerHTML = '<p class="text-center text-slate-400 py-8 text-sm">ยังไม่มีเนื้อหาในหมวดวิชานี้ สามารถเพิ่มได้ที่หน้าจัดการเนื้อหา</p>';
+            } else {
+                subLessons.forEach((lesson, index) => {
+                    const isRead = state.readProgress.includes(lesson.id);
+                    const tagsHtml = (lesson.tags || []).map(t => `<span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-300 border border-amber-500/30">#${t}</span>`).join('');
+                    const quizCount = Array.isArray(lesson.quiz) ? lesson.quiz.length : 0;
+
+                    const el = document.createElement('div');
+                    el.className = `p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer transition ${isRead ? 'bg-emerald-50/70 dark:bg-emerald-900/15 border-emerald-300 dark:border-emerald-800/60 hover:border-emerald-400' : 'bg-slate-50 dark:bg-police-900 border-slate-200 dark:border-police-700 hover:border-amber-400'}`;
+                    el.onclick = () => openReadingView(lesson.id);
+                    el.innerHTML = `
+                        <div class="flex items-start sm:items-center gap-3.5">
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5 sm:mt-0 ${isRead ? 'bg-emerald-500 text-white' : 'bg-slate-300 dark:bg-police-700 text-slate-700 dark:text-slate-300'}">
+                                ${isRead ? '<i class="fa-solid fa-check"></i>' : index + 1}
+                            </div>
+                            <div>
+                                <div class="font-bold text-sm sm:text-base text-slate-800 dark:text-slate-100">${lesson.title}</div>
+                                <div class="flex flex-wrap items-center gap-1.5 mt-1">
+                                    ${tagsHtml}
+                                    ${quizCount > 0 ? `<span class="text-[10px] font-semibold text-slate-500 dark:text-slate-400"><i class="fa-solid fa-pen-clip text-amber-400 mr-1"></i>ควิซ ${quizCount} ข้อ</span>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-end gap-2 text-xs font-bold text-amber-600 dark:text-amber-400 shrink-0">
+                            <span>อ่านสรุป</span> <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                    `;
+                    container.appendChild(el);
+                });
+            }
+            switchTab('lesson-list');
+        }
+
+        function openReadingView(lessonId) {
+            state.currentLessonId = lessonId;
+            const lesson = state.lessons.find(l => l.id === lessonId);
+            if (!lesson) return;
+
+            document.getElementById('reading-subject-badge').innerText = SUBJECT_METADATA[lesson.subject]?.name || lesson.subject;
+            document.getElementById('reading-title').innerText = lesson.title;
+            document.getElementById('reading-content').innerHTML = lesson.content;
+            document.getElementById('reading-tags-container').innerHTML = (lesson.tags || []).map(t => `<span class="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-amber-500/15 text-amber-600 dark:text-amber-300 border border-amber-500/30">#${t}</span>`).join('');
+            document.getElementById('reading-quiz-count').innerText = Array.isArray(lesson.quiz) ? lesson.quiz.length : 0;
+
+            const imgContainer = document.getElementById('reading-image-container');
+            const imgEl = document.getElementById('reading-image');
+            if (lesson.imageUrl && lesson.imageUrl.trim() !== '') { imgEl.src = lesson.imageUrl; imgContainer.classList.remove('hidden'); }
+            else { imgContainer.classList.add('hidden'); }
+
+            const trickContainer = document.getElementById('reading-trick-container');
+            if (lesson.trick && lesson.trick.trim() !== '') {
+                document.getElementById('reading-trick').innerHTML = lesson.trick;
+                trickContainer.classList.remove('hidden');
+            } else { trickContainer.classList.add('hidden'); }
+
+            applyReadingFontSize();
+            updateReadButtonUI();
+            switchTab('reading-view');
+            triggerMathRender();
+        }
+
+        function changeFontSize(delta) {
+            state.readingFontSizeStep = Math.max(-1, Math.min(2, state.readingFontSizeStep + delta));
+            applyReadingFontSize();
+        }
+
+        function applyReadingFontSize() {
+            const contentEl = document.getElementById('reading-content');
+            if (!contentEl) return;
+            const sizeClasses = ['text-sm sm:text-base', 'text-base sm:text-lg', 'text-lg sm:text-xl', 'text-xl sm:text-2xl'];
+            contentEl.className = `${sizeClasses[state.readingFontSizeStep + 1]} text-slate-700 dark:text-slate-200 leading-relaxed content-body`;
+        }
+
+        function toggleReadStatus() {
+            const id = state.currentLessonId;
+            if (!id) return;
+            const idx = state.readProgress.indexOf(id);
+            if (idx > -1) { state.readProgress.splice(idx, 1); showToast('ยกเลิกสถานะการอ่านแล้ว', 'amber'); }
+            else { state.readProgress.push(id); showToast('บันทึกว่าอ่านจบบทเรียนนี้แล้ว!', 'green'); }
+            saveState();
+            updateReadButtonUI();
+        }
+
+        function updateReadButtonUI() {
+            const btn = document.getElementById('btn-mark-read');
+            const isRead = state.readProgress.includes(state.currentLessonId);
+            if (isRead) {
+                btn.className = "px-3.5 py-2 bg-slate-600 hover:bg-slate-500 text-white font-bold rounded-xl text-xs shadow transition flex items-center gap-1.5";
+                btn.innerHTML = `<i class="fa-solid fa-check-double text-emerald-400"></i> อ่านจบแล้ว (คลิกเพื่อยกเลิก)`;
+            } else {
+                btn.className = "px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow transition flex items-center gap-1.5";
+                btn.innerHTML = `<i class="fa-solid fa-check-circle"></i> ทำเครื่องหมายว่าอ่านแล้ว`;
+            }
+        }
+
+        function generateFallbackQuizForLesson(lesson) {
+            const otherLessons = state.lessons.filter(l => l.id !== lesson.id);
+            const distractors = otherLessons.slice(0, 3).map(l => l.trick || l.title);
+            while (distractors.length < 3) distractors.push('ไม่มีข้อใดกล่าวถูกต้องตามหลักเกณฑ์');
+            const correctText = lesson.trick || 'สรุปสาระสำคัญถูกต้องตามเนื้อหาบทเรียน';
+            return [{
+                q: `ข้อใดคือเทคนิค/สาระสำคัญของหัวข้อ "${lesson.title}"?`,
+                options: [correctText, ...distractors.slice(0, 3)],
+                answer: 0,
+                explain: `สาระสำคัญของบทนี้คือ: ${correctText}`
+            }];
+        }
+
+        function openLessonQuizModal() {
+            const lesson = state.lessons.find(l => l.id === state.currentLessonId);
+            if (!lesson) return;
+            const quizData = (Array.isArray(lesson.quiz) && lesson.quiz.length > 0) ? lesson.quiz : generateFallbackQuizForLesson(lesson);
+            startQuizSession(quizData, `ควิซท้ายบท: ${lesson.title}`, SUBJECT_METADATA[lesson.subject]?.name || '');
+        }
+
+        function startSubjectQuiz() {
+            const subKey = state.currentSubject;
+            const subLessons = state.lessons.filter(l => l.subject === subKey);
+            let pool = [];
+            subLessons.forEach(l => {
+                if (Array.isArray(l.quiz) && l.quiz.length > 0) pool = pool.concat(l.quiz);
+                else pool = pool.concat(generateFallbackQuizForLesson(l));
+            });
+            if (pool.length === 0) return showToast('ยังไม่มีข้อสอบในหมวดวิชานี้', 'amber');
+            startQuizSession(pool, `ควิซรวมวิชา: ${SUBJECT_METADATA[subKey]?.name || ''}`, 'ทดสอบความแม่นยำรายวิชา');
+        }
+
+        function startRandomAllQuiz() {
+            let pool = [];
+            state.lessons.forEach(l => { if (Array.isArray(l.quiz) && l.quiz.length > 0) pool = pool.concat(l.quiz); });
+            if (pool.length === 0) return showToast('ไม่มีข้อสอบในระบบ', 'amber');
+            const shuffled = [...pool].sort(() => Math.random() - 0.5).slice(0, 10);
+            startQuizSession(shuffled, 'สุ่มสอบรวมทุกวิชา (จำลองสนามสอบ นสต.)', `จำนวน ${shuffled.length} ข้อ`);
+        }
+
+        function startQuizSession(questions, title, subtitle) {
+            state.quizItems = questions; state.quizIndex = 0; state.quizScore = 0; state.quizAnswered = false;
+            document.getElementById('quiz-modal-title').innerText = title;
+            document.getElementById('quiz-modal-subtitle').innerText = subtitle;
+            document.getElementById('modal-quiz').classList.remove('hidden');
+            renderCurrentQuizQuestion();
+        }
+
+        function renderCurrentQuizQuestion() {
+            const total = state.quizItems.length;
+            if (state.quizIndex >= total) {
+                const pct = Math.round((state.quizScore / total) * 100);
+                document.getElementById('quiz-progress-label').innerText = 'สรุปผลคะแนนสอบ';
+                document.getElementById('quiz-score-live').innerText = `${state.quizScore} / ${total} คะแนน (${pct}%)`;
+                document.getElementById('quiz-question-text').innerHTML = `
+                    <div class="text-center py-4 space-y-2">
+                        <div class="text-4xl font-extrabold ${pct >= 60 ? 'text-emerald-500' : 'text-amber-500'}">${state.quizScore} / ${total}</div>
+                        <div class="text-sm font-bold">${pct >= 80 ? 'ยอดเยี่ยม! พร้อมลงสนามสอบจริง' : pct >= 60 ? 'ผ่านเกณฑ์! ทบทวนจุดที่ผิดอีกนิด' : 'แนะนำให้กลับไปอ่านทริคช่วยจำซ้ำอีกครั้งครับ'}</div>
+                    </div>
+                `;
+                document.getElementById('quiz-options-list').innerHTML = '';
+                document.getElementById('quiz-explanation-box').classList.add('hidden');
+                const nextBtn = document.getElementById('btn-next-quiz-q');
+                nextBtn.classList.remove('hidden');
+                nextBtn.innerHTML = `<i class="fa-solid fa-rotate-right mr-1"></i> ทำควิซชุดนี้อีกครั้ง`;
+                nextBtn.onclick = () => { state.quizIndex = 0; state.quizScore = 0; renderCurrentQuizQuestion(); };
+                return;
+            }
+
+            state.quizAnswered = false;
+            const item = state.quizItems[state.quizIndex];
+            document.getElementById('quiz-progress-label').innerText = `ข้อที่ ${state.quizIndex + 1} จาก ${total}`;
+            document.getElementById('quiz-score-live').innerText = `คะแนนสะสม: ${state.quizScore}`;
+            document.getElementById('quiz-question-text').innerText = item.q;
+
+            const optsContainer = document.getElementById('quiz-options-list');
+            optsContainer.innerHTML = '';
+            const prefixes = ['ก.', 'ข.', 'ค.', 'ง.'];
+            item.options.forEach((optText, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-3.5 rounded-xl border border-slate-200 dark:border-police-600 bg-slate-50 dark:bg-police-900/70 hover:border-amber-400 text-xs sm:text-sm font-semibold transition flex items-center gap-3';
+                btn.onclick = () => selectQuizAnswer(idx, btn);
+                btn.innerHTML = `<span class="w-7 h-7 rounded-lg bg-slate-200 dark:bg-police-700 flex items-center justify-center font-bold text-xs shrink-0">${prefixes[idx] || (idx + 1)}</span><span>${optText}</span>`;
+                optsContainer.appendChild(btn);
+            });
+
+            document.getElementById('quiz-explanation-box').classList.add('hidden');
+            const nextBtn = document.getElementById('btn-next-quiz-q');
+            nextBtn.classList.add('hidden');
+            nextBtn.onclick = nextQuizQuestion;
+            nextBtn.innerHTML = state.quizIndex + 1 === total ? `ดูสรุปคะแนน <i class="fa-solid fa-flag-checkered ml-1"></i>` : `ข้อถัดไป <i class="fa-solid fa-arrow-right ml-1"></i>`;
+        }
+
+        function selectQuizAnswer(selectedIndex, clickedBtn) {
+            if (state.quizAnswered) return;
+            state.quizAnswered = true;
+            const item = state.quizItems[state.quizIndex];
+            const isCorrect = selectedIndex === item.answer;
+            if (isCorrect) state.quizScore++;
+            document.getElementById('quiz-score-live').innerText = `คะแนนสะสม: ${state.quizScore}`;
+
+            const buttons = document.getElementById('quiz-options-list').querySelectorAll('button');
+            buttons.forEach((btn, idx) => {
+                if (idx === item.answer) btn.className = 'w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 text-xs sm:text-sm font-bold flex items-center gap-3';
+                else if (idx === selectedIndex && !isCorrect) btn.className = 'w-full text-left p-3.5 rounded-xl border-2 border-red-500 bg-red-500/15 text-red-700 dark:text-red-300 text-xs sm:text-sm font-bold flex items-center gap-3';
+                else btn.className = 'w-full text-left p-3.5 rounded-xl border border-slate-200 dark:border-police-700 opacity-50 text-xs sm:text-sm flex items-center gap-3';
+            });
+
+            const expBox = document.getElementById('quiz-explanation-box');
+            expBox.innerHTML = `<strong class="${isCorrect ? 'text-emerald-500' : 'text-red-400'}">${isCorrect ? '✓ ตอบถูกต้อง!' : '✗ ยังไม่ถูกครับ'}</strong> — ${item.explain || ''}`;
+            expBox.classList.remove('hidden');
+            document.getElementById('btn-next-quiz-q').classList.remove('hidden');
+        }
+
+        function nextQuizQuestion() { state.quizIndex++; renderCurrentQuizQuestion(); }
+        function closeQuizModal() { document.getElementById('modal-quiz').classList.add('hidden'); }
+
+        function initFlashcards() {
+            const subFilter = document.getElementById('flashcard-subject-filter').value;
+            state.fcList = state.lessons.filter(l => subFilter === 'ALL' || l.subject === subFilter);
+            state.fcIndex = 0; state.fcFlipped = false;
+            renderFlashcard();
+        }
+
+        function renderFlashcard() {
+            const badge = document.getElementById('fc-badge');
+            const counter = document.getElementById('fc-counter');
+            const sideLabel = document.getElementById('fc-side-label');
+            const mainText = document.getElementById('fc-main-text');
+            const subText = document.getElementById('fc-sub-text');
+
+            if (state.fcList.length === 0) {
+                badge.innerText = 'ไม่มีข้อมูล'; counter.innerText = '0 / 0';
+                sideLabel.innerText = 'ไม่พบการ์ดในหมวดนี้'; mainText.innerText = 'กรุณาเลือกหมวดวิชาอื่น';
+                subText.classList.add('hidden'); return;
+            }
+
+            const item = state.fcList[state.fcIndex];
+            badge.innerText = SUBJECT_METADATA[item.subject]?.name || item.subject;
+            counter.innerText = `${state.fcIndex + 1} / ${state.fcList.length}`;
+
+            if (!state.fcFlipped) {
+                sideLabel.innerText = 'ด้านหน้า: หัวข้อบทเรียน (คลิกเพื่อดูสูตรลัดช่วยจำ)';
+                mainText.innerHTML = item.title; subText.classList.add('hidden');
+            } else {
+                sideLabel.innerText = '💡 ด้านหลัง: เทคนิค / สูตรลัดช่วยจำ';
+                mainText.innerHTML = item.trick || 'ไม่มีสูตรลัดระบุไว้ กดอ่านบทเรียนฉบับเต็มด้านล่าง';
+                subText.innerHTML = (item.tags || []).map(t => `#${t}`).join('  ');
+                subText.classList.remove('hidden');
+            }
+            triggerMathRender();
+        }
+
+        function flipCurrentCard() { if (state.fcList.length === 0) return; state.fcFlipped = !state.fcFlipped; renderFlashcard(); }
+        function prevFlashcard() { if (state.fcList.length === 0) return; state.fcIndex = (state.fcIndex - 1 + state.fcList.length) % state.fcList.length; state.fcFlipped = false; renderFlashcard(); }
+        function nextFlashcard() { if (state.fcList.length === 0) return; state.fcIndex = (state.fcIndex + 1) % state.fcList.length; state.fcFlipped = false; renderFlashcard(); }
+        function openCurrentFlashcardLesson() { if (state.fcList.length === 0) return; const item = state.fcList[state.fcIndex]; state.currentSubject = item.subject; openReadingView(item.id); }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('admin-lessons-tbody');
+            tbody.innerHTML = '';
+            const subjectFilter = document.getElementById('admin-filter-subject').value;
+            const filtered = state.lessons.filter(l => subjectFilter === 'ALL' || l.subject === subjectFilter);
+            document.getElementById('admin-l-total-count').innerText = filtered.length;
+            
+            filtered.forEach((l, idx) => {
+                const tagsStr = (l.tags || []).map(t => `<span class="px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-400 text-[10px]">#${t}</span>`).join(' ');
+                const qLen = Array.isArray(l.quiz) ? l.quiz.length : 0;
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 dark:hover:bg-police-700/50 transition";
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-slate-400">${idx + 1}</td>
+                    <td class="p-3 font-semibold text-amber-500 dark:text-amber-400">${SUBJECT_METADATA[l.subject]?.name || l.subject}</td>
+                    <td class="p-3 font-bold text-slate-700 dark:text-slate-200">${l.title}</td>
+                    <td class="p-3 space-x-1">${tagsStr} <span class="text-[10px] text-slate-400">(${qLen} ข้อ)</span></td>
+                    <td class="p-3 text-center space-x-2">
+                        <button onclick="editLesson('${l.id}')" title="แก้ไข" class="text-amber-400 hover:text-amber-300 p-1"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="confirmDeleteLesson('${l.id}')" title="ลบ" class="text-red-500 hover:text-red-400 p-1"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function saveLessonForm() {
+            const editId = document.getElementById('edit-l-id').value;
+            const rawTags = document.getElementById('l-tags').value;
+            const tagsArr = rawTags ? rawTags.split(',').map(t => t.trim()).filter(Boolean) : [];
+            const existing = editId ? state.lessons.find(l => l.id === editId) : null;
+
+            const obj = {
+                id: editId || ('l_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7)),
+                subject: document.getElementById('l-subject').value,
+                title: document.getElementById('l-title').value.trim(),
+                content: document.getElementById('l-content').value,
+                imageUrl: document.getElementById('l-image-url').value.trim(),
+                trick: document.getElementById('l-trick').value.trim(),
+                tags: tagsArr,
+                quiz: existing && Array.isArray(existing.quiz) ? existing.quiz : []
+            };
+            
+            if (editId) {
+                const idx = state.lessons.findIndex(l => l.id === editId);
+                if (idx > -1) state.lessons[idx] = obj;
+            } else { state.lessons.push(obj); }
+            
+            saveState(); resetLessonForm(); renderAdminTable();
+            showToast('บันทึกเนื้อหาเรียบร้อยแล้ว', 'green');
+        }
+
+        function editLesson(id) {
+            const l = state.lessons.find(x => x.id === id);
+            if (!l) return;
+            document.getElementById('edit-l-id').value = l.id;
+            document.getElementById('l-subject').value = l.subject;
+            document.getElementById('l-title').value = l.title;
+            document.getElementById('l-content').value = l.content;
+            document.getElementById('l-image-url').value = l.imageUrl || '';
+            document.getElementById('l-trick').value = l.trick || '';
+            document.getElementById('l-tags').value = Array.isArray(l.tags) ? l.tags.join(', ') : '';
+            window.scrollTo({ top: document.getElementById('form-lesson').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        function resetLessonForm() { document.getElementById('form-lesson').reset(); document.getElementById('edit-l-id').value = ''; }
+
+        function openConfirmModal(title, message, onConfirm) {
+            document.getElementById('confirm-modal-title').innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-400"></i> ${title}`;
+            document.getElementById('confirm-modal-msg').innerText = message;
+            const okBtn = document.getElementById('btn-confirm-ok');
+            okBtn.onclick = () => { closeConfirmModal(); onConfirm(); };
+            document.getElementById('modal-confirm').classList.remove('hidden');
+        }
+        function closeConfirmModal() { document.getElementById('modal-confirm').classList.add('hidden'); }
+
+        function confirmDeleteLesson(id) {
+            const lesson = state.lessons.find(l => l.id === id);
+            openConfirmModal('ยืนยันการลบบทเรียน', `ต้องการลบบทเรียน "${lesson ? lesson.title : ''}" ออกจากคลังใช่หรือไม่?`, () => {
+                state.lessons = state.lessons.filter(l => l.id !== id);
+                state.readProgress = state.readProgress.filter(p => p !== id);
+                saveState(); renderAdminTable();
+                showToast('ลบเนื้อหาเรียบร้อยแล้ว', 'amber');
+            });
+        }
+
+        function openResetConfirmModal() {
+            openConfirmModal('รีเซ็ตเป็นข้อมูลตั้งต้น', 'ระบบจะนำเนื้อหาตั้งต้นทั้ง 6 วิชา (พร้อมควิซและสูตรลัด) กลับมาใหม่ ยืนยันหรือไม่?', () => {
+                state.lessons = JSON.parse(JSON.stringify(DEFAULT_LESSONS));
+                state.readProgress = [];
+                saveState(); renderAdminTable();
+                showToast('รีเซ็ตคลังเนื้อหาเรียบร้อย!', 'green');
+            });
+        }
+
+        function openSmartJsonModal(mode = 'import') {
+            const modal = document.getElementById('modal-smart-json');
+            const titleEl = document.getElementById('json-modal-title');
+            const descEl = document.getElementById('json-modal-desc');
+            const textarea = document.getElementById('smart-json-textarea');
+            const btnCopy = document.getElementById('btn-json-copy');
+            const btnImport = document.getElementById('btn-json-import');
+
+            if (mode === 'export') {
+                titleEl.innerHTML = `<i class="fa-solid fa-code text-emerald-400 mr-1"></i> ข้อมูลสำรองระบบทั้งหมด (Full Backup JSON)`;
+                descEl.innerText = 'คัดลอกข้อความ JSON ด้านล่างเพื่อเก็บไว้สำรองข้อมูล';
+                textarea.value = JSON.stringify(state.lessons, null, 2);
+                btnCopy.classList.remove('hidden'); btnImport.classList.add('hidden');
+            } else {
+                titleEl.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles text-purple-400 mr-1"></i> นำเข้าเนื้อหาผ่าน Smart JSON`;
+                descEl.innerText = 'วางข้อความ JSON ของบทเรียนที่ต้องการนำเข้า';
+                textarea.value = '';
+                btnCopy.classList.add('hidden'); btnImport.classList.remove('hidden');
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function closeSmartJsonModal() { document.getElementById('modal-smart-json').classList.add('hidden'); }
+
+        function copyJsonTextarea() {
+            const textarea = document.getElementById('smart-json-textarea');
+            textarea.select();
+            try { navigator.clipboard.writeText(textarea.value); showToast('คัดลอก JSON ลงคลิปบอร์ดแล้ว!', 'green'); }
+            catch (e) { document.execCommand('copy'); showToast('คัดลอก JSON เรียบร้อยแล้ว!', 'green'); }
+        }
+
+        function processSmartJsonInput() {
+            const rawText = document.getElementById('smart-json-textarea').value.trim();
+            if (!rawText) return showToast('กรุณาใส่ข้อความ JSON ก่อน', 'red');
+            try {
+                const parsed = JSON.parse(rawText);
+                const dataArray = Array.isArray(parsed) ? parsed : (Array.isArray(parsed.lessons) ? parsed.lessons : [parsed]);
+                let count = 0;
+                dataArray.forEach((item, idx) => {
+                    if (!item.title || !item.content) return;
+                    state.lessons.push({
+                        id: `l_import_${Date.now()}_${idx}`,
+                        subject: item.subject || 'math',
+                        title: item.title,
+                        content: item.content,
+                        trick: item.trick || '',
+                        imageUrl: item.imageUrl || '',
+                        tags: Array.isArray(item.tags) ? item.tags : ['นำเข้าใหม่'],
+                        quiz: Array.isArray(item.quiz) ? item.quiz : []
+                    });
+                    count++;
+                });
+                if (count > 0) {
+                    saveState(); renderAdminTable(); closeSmartJsonModal();
+                    document.getElementById('smart-json-textarea').value = '';
+                    showToast(`นำเข้าสำเร็จ ${count} บทเรียน`, 'green');
+                } else { showToast('ไม่พบรูปแบบ title และ content ใน JSON', 'amber'); }
+            } catch(e) { showToast('รูปแบบ JSON ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง', 'red'); }
+        }
+    </script>
+</body>
+</html>
